@@ -7,6 +7,11 @@ class Post extends Component {
     componentDidMount() {
         this.props.fetchPosts();
     }
+    componentWillReceiveProps(nexProps) {
+        if(nexProps.newPost) {
+            this.props.posts.unshift(nexProps.newPost)
+        }
+    }
     render() {
         const postItems = this.props.posts.map((post) => (
             <div key={post.id}>
@@ -23,6 +28,7 @@ class Post extends Component {
     }
 }
 const mapStateToProps = state => ({
-    posts: state.posts.items
+    posts: state.posts.items,
+    newPost: state.posts.item
 })
 export default connect(mapStateToProps, {fetchPosts})(Post);
